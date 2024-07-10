@@ -6,8 +6,8 @@ export async function sendDataToUbidots(data) {
   const deviceLabel = process.env.DEVICE_LABEL;
 
   for (const row of data) {
-    const [datetime, temperature, pressure, vehicles] = row;
-
+    const [datetime, temperature, pressure, vehicles, battery, current] = row;
+  
     const payload = {
       temperature: {
         value: parseFloat(temperature),
@@ -21,6 +21,14 @@ export async function sendDataToUbidots(data) {
         value: parseInt(vehicles, 10),
         timestamp: new Date(datetime).getTime(),
       },
+      battery: {
+        value: parseInt(battery),
+        timestamp: new Date(datetime).getTime(),
+      },
+      current: {
+        value: parseInt(current),
+        timestamp: new Date(datetime).getTime(),
+      }
     };
 
     try {
